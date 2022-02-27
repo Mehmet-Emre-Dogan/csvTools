@@ -14,21 +14,21 @@ with open("links.txt", "r", encoding="utf-8") as fil:
 print(f"--> {len(links)} link found. Download starting...")
 
 for i, link in enumerate(links):
-    i += 1
     try:
-        print(f"-> {str(i).zfill(3)}: Downloading {link}")
+        link = link.strip()
+        print(f"-> {str(i + 1).zfill(3)}: Downloading {link}")
         content = b""
         content = requests.get(link).content
         # print(content)
         customDT = datetime.datetime.now().strftime('%Y-%m-%d_%H.%M.%S')
-        fileName = customDT + "__" + link.split("/")[-1].replace("\n", "")
+        fileName = customDT + "__" + link.split("/")[-1]
         # print(fileName)
         with open(PATH + fileName, "wb") as fil:
             fil.write(content)
     except Exception as ex:
         print("An error occured:")
         print(ex)
-    finally:
+    else:
         print(f"-> saved file: {fileName}")
 
 print("--> All links are downloaded. Press any key to exit.")
